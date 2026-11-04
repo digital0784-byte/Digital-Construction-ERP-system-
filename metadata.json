@@ -1,0 +1,6 @@
+{
+  "name": "Zemen Construction ERP",
+  "description": "Comprehensive Construction Enterprise Resource Planning (ERP) system for managing projects, sites, materials inventory, machinery fleet, labor payroll, BOQ/IPC billing, and daily site logs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
