@@ -1,8 +1,10 @@
 export const translations = {
   am: {
-    appTitle: 'ዘመን ኮንስትራክሽን ኢአርፒ',
-    appSubtitle: 'የግንባታ ፕሮጀክትና ሃብት አስተዳደር ስርዓት',
+    appTitle: 'ዲጂታል ኮንስትራክሽን ኢአርፒ ሲስተም',
+    appSubtitle: 'የግንባታ ፕሮጀክትና ሃብት አስተዳደር ስርዓት (digital Construction ERP system)',
     dashboard: 'ዳሽቦርድ',
+    siteInspections: 'የሳይት ኢንስፔክሽን (ፍተሻ)',
+    taskOrders: 'የሳይት የስራ ትዕዛዞች',
     projects: 'ፕሮጀክቶችና ሳይቶች',
     materials: 'እቃዎችና ስቶክ',
     machinery: 'ማሽነሪዎችና መርከብ',
@@ -11,6 +13,17 @@ export const translations = {
     dailyLog: 'ዕለታዊ የሳይት ሪፖርት',
     qualityHse: 'ጥራትና ደህንነት (QC)',
     reports: 'ሪፖርቶችና ትንተና',
+    
+    // Roles Workspaces
+    roleCeo: 'የዋና ስራ አስፈፃሚ አፕ (CEO Cockpit)',
+    roleHeadOffice: 'የዋና መ/ቤት አፕ (Head Office HQ)',
+    rolePm: 'የፕሮጀክት ማኔጀር አፕ (Project Manager)',
+    roleSe: 'የሳይት መሃንዲስ አፕ (Site Engineer)',
+    roleSupervisor: 'የሳይት ሱፐርቫይዘር አፕ (Supervisor App)',
+    roleStore: 'የመጋዘን ባለቤት አፕ (Store Owner / Manager)',
+    roleHr: 'የሰው ኃይል አፕ (HR Management)',
+    roleEmployee: 'የሰራተኛ ፖርታል (Employee Self-Service)',
+    switchRole: 'የተጠቃሚ መተግበሪያ ምረጥ',
     
     // Actions & Common
     add: 'አዲስ ጨምር',
@@ -152,9 +165,11 @@ export const translations = {
     fleetActiveRate: 'የማሽነሪ ስራ ቅልጥፍና',
   },
   en: {
-    appTitle: 'Zemen Construction ERP',
+    appTitle: 'digital Construction ERP system',
     appSubtitle: 'Enterprise Construction Management System',
     dashboard: 'Dashboard',
+    siteInspections: 'Site Inspections',
+    taskOrders: 'Field Task Orders',
     projects: 'Projects & Sites',
     materials: 'Materials & Stock',
     machinery: 'Machinery & Fleet',
@@ -163,6 +178,17 @@ export const translations = {
     dailyLog: 'Daily Site Log',
     qualityHse: 'Quality & HSE (QC)',
     reports: 'Reports & Analytics',
+    
+    // Roles Workspaces
+    roleCeo: 'CEO Executive Cockpit',
+    roleHeadOffice: 'Head Office HQ Hub',
+    rolePm: 'Project Manager App',
+    roleSe: 'Site Engineer App',
+    roleSupervisor: 'Site Supervisor App',
+    roleStore: 'Store Owner / Warehouse App',
+    roleHr: 'Human Resources (HR) App',
+    roleEmployee: 'Employee Self-Service App',
+    switchRole: 'Switch Role Workspace',
     
     // Actions & Common
     add: 'Add New',

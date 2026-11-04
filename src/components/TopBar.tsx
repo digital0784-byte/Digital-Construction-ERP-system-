@@ -25,6 +25,8 @@ export const TopBar: React.FC<TopBarProps> = ({
   const getModuleTitle = () => {
     switch (activeTab) {
       case 'dashboard': return t('dashboard');
+      case 'site_inspections': return t('siteInspections');
+      case 'task_orders': return t('taskOrders');
       case 'projects': return t('projects');
       case 'materials': return t('materials');
       case 'machinery': return t('machinery');
@@ -49,7 +51,7 @@ export const TopBar: React.FC<TopBarProps> = ({
       {/* Zone 1: Contextual Breadcrumb */}
       <div className="flex items-center gap-2 text-sm whitespace-nowrap shrink-0">
         <span className="font-semibold text-slate-400">
-          {language === 'am' ? 'ዘመን ኮንስትራክሽን ኢአርፒ' : 'Zemen Construction ERP'}
+          {language === 'am' ? 'ዲጂታል ኮንስትራክሽን ኢአርፒ' : 'digital Construction ERP system'}
         </span>
         <span className="text-slate-600">/</span>
         <span className="font-medium text-amber-400">

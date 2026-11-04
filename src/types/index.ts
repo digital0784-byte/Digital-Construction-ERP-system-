@@ -166,8 +166,86 @@ export interface QualityTest {
   remarks: string;
 }
 
+export type UserRole = 
+  | 'ceo'               // Executive CEO Cockpit
+  | 'head_office'       // HQ Corporate Operations & Approvals
+  | 'project_manager'   // PM Project Portfolio & Contracts
+  | 'site_engineer'     // Technical QC & Structural Inspection
+  | 'site_supervisor'   // Site Workforce, Daily Diary & Field Execution
+  | 'store_owner'       // Warehouse Inventory & Requisitions
+  | 'hr_manager'        // HR Roster, Recruitment, Attendance & Payroll
+  | 'employee';         // Employee Self-Service (My Pay, Tasks, Leave)
+
+export interface LeaveRequest {
+  id: string;
+  workerId: string;
+  workerName: string;
+  role: string;
+  leaveType: 'annual' | 'sick' | 'emergency';
+  startDate: string;
+  endDate: string;
+  reasonAm: string;
+  status: 'pending' | 'approved' | 'rejected';
+  appliedDate: string;
+}
+
+export interface StoreRequisition {
+  id: string;
+  reqNumber: string;
+  requestedBy: string;
+  projectId: string;
+  materialId: string;
+  materialNameAm: string;
+  quantityRequested: number;
+  unit: string;
+  priority: 'routine' | 'urgent';
+  status: 'pending' | 'approved' | 'issued' | 'rejected';
+  requestDate: string;
+  requiredDate: string;
+}
+
+export interface ExecutiveMemo {
+  id: string;
+  titleAm: string;
+  titleEn: string;
+  from: string;
+  category: 'policy' | 'budget_approval' | 'urgent_directive';
+  date: string;
+  contentAm: string;
+  status: 'published' | 'under_review';
+}
+
+export interface SiteInspectionItem {
+  id: string;
+  category: 'structural' | 'safety' | 'materials' | 'workmanship';
+  titleAm: string;
+  titleEn: string;
+  status: 'passed' | 'rectify' | 'critical' | 'pending';
+  notes: string;
+  inspectorName: string;
+  date: string;
+  projectId: string;
+}
+
+export interface SiteTaskOrder {
+  id: string;
+  orderNumber: string;
+  projectId: string;
+  assignedTo: string; // e.g. 'Foreman Tadesse', 'Bar Benders Crew'
+  assignedRole: 'foreman' | 'subcontractor' | 'trade_leader';
+  titleAm: string;
+  titleEn: string;
+  deadline: string;
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  status: 'pending' | 'in_progress' | 'completed';
+  createdByRole: UserRole;
+  createdByName: string;
+}
+
 export type ActiveTab = 
   | 'dashboard'
+  | 'site_inspections'
+  | 'task_orders'
   | 'projects'
   | 'materials'
   | 'machinery'

@@ -112,12 +112,26 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
               </p>
             </div>
 
-            <div className="flex items-center gap-3 shrink-0">
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <button
+                onClick={() => setActiveTab('site_inspections')}
+                className="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer"
+              >
+                <span>{language === 'am' ? 'የሳይት ኢንስፔክሽን' : 'Site Inspection'}</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setActiveTab('task_orders')}
+                className="px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer"
+              >
+                <span>{language === 'am' ? 'የስራ ትዕዛዞች' : 'Task Orders'}</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
               <button
                 onClick={() => setActiveTab('projects')}
-                className="px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer"
+                className="px-3.5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer"
               >
-                <span>{language === 'am' ? 'ሳይቶች አስተዳድር' : 'Manage Sites'}</span>
+                <span>{language === 'am' ? 'ሳይቶች' : 'Sites'}</span>
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>

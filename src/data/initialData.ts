@@ -7,7 +7,12 @@ import {
   BOQItem, 
   InterimPaymentCertificate, 
   SiteDailyLog, 
-  QualityTest 
+  QualityTest,
+  SiteInspectionItem,
+  SiteTaskOrder,
+  LeaveRequest,
+  StoreRequisition,
+  ExecutiveMemo
 } from '../types';
 
 export const INITIAL_PROJECTS: Project[] = [
@@ -691,3 +696,177 @@ export const INITIAL_QC_TESTS: QualityTest[] = [
     remarks: 'Yield strength 512 MPa, Elongation 16.5% - ASTM A615 መስፈርትን ያሟላል'
   }
 ];
+
+export const INITIAL_INSPECTIONS: SiteInspectionItem[] = [
+  {
+    id: 'insp-1',
+    category: 'structural',
+    titleAm: 'የ 11ኛ ፎቅ የሰሌዳ ብረት አርማታ ክፍተትና ማሰሪያ (Rebar Spacing & Tying)',
+    titleEn: '11th Floor Slab Rebar Spacing & Cover Block Inspection',
+    status: 'passed',
+    notes: 'የ 25mm የኮንክሪት ከቨር ብሎኮች በቦታቸው ተቀምጠዋል፤ ዋናና ማከፋፈያ ብረቶች እንደ ስዕሉ ተፈትሸው ጸድቀዋል',
+    inspectorName: 'ኢ/ር ትዕግስት ሃይሉ (Site Engineer)',
+    date: '2026-11-03',
+    projectId: 'prj-1'
+  },
+  {
+    id: 'insp-2',
+    category: 'safety',
+    titleAm: 'የ 11ኛ ፎቅ ዙሪያ ጥበቃና የሰራተኞች ደህንነት ቀበቶ (Edge Protection & Safety Harness)',
+    titleEn: '11th Floor Perimeter Guardrails & Fall Arrest Systems',
+    status: 'rectify',
+    notes: 'በምስራቅ በኩል 4 ሜትር የጥበቃ አጥር (guardrail) ጎድሏል፤ ፎርማን ታደሰ ዛሬ ከሰዓት በፊት እንዲያስተካክል ታዟል',
+    inspectorName: 'ሱፐርቫይዘር ታደሰ ወርቁ (Site Supervisor)',
+    date: '2026-11-04',
+    projectId: 'prj-1'
+  },
+  {
+    id: 'insp-3',
+    category: 'workmanship',
+    titleAm: 'የ 10ኛ ፎቅ አምዶች ፕላምብና ቨርቲካሊቲ (Column Verticality & Alignment)',
+    titleEn: '10th Floor Column Vertical Plumb Line & Alignment',
+    status: 'passed',
+    notes: 'በሌዘርና በፕላምብ ቦብ የተፈተሸ፤ ልዩነቱ ከ 3mm በታች ሆኖ በመስፈርቱ መሰረት አልፏል',
+    inspectorName: 'ኢ/ር ትዕግስት ሃይሉ (Site Engineer)',
+    date: '2026-11-02',
+    projectId: 'prj-1'
+  },
+  {
+    id: 'insp-4',
+    category: 'materials',
+    titleAm: 'የተቀበልነው የዳንጎቴ ሲሚንቶ እርጥበትና ጥራት ፍተሻ',
+    titleEn: 'Dangote OPC Cement Bags Freshness & Storage Moisture Check',
+    status: 'passed',
+    notes: 'መጋዘኑ ደረቅና ከወለል በላይ በፓሌት ላይ የተከማቸ ነው፤ ምንም አይነት እርጥበት አልገጠመም',
+    inspectorName: 'ሱፐርቫይዘር ታደሰ ወርቁ (Site Supervisor)',
+    date: '2026-11-04',
+    projectId: 'prj-1'
+  }
+];
+
+export const INITIAL_TASK_ORDERS: SiteTaskOrder[] = [
+  {
+    id: 'tsk-1',
+    orderNumber: 'WO-2026-088',
+    projectId: 'prj-1',
+    assignedTo: 'የብረት አሳሪዎች ቡድን መሪ ተክሌ',
+    assignedRole: 'trade_leader',
+    titleAm: 'የ 12ኛ ፎቅ አምዶች (C1-C14) ዋና ብረት ዝርጋታና እስቲራፕ ማሰር',
+    titleEn: 'Erect column vertical bars and links for 12th Floor (C1-C14)',
+    deadline: '2026-11-06',
+    priority: 'urgent',
+    status: 'in_progress',
+    createdByRole: 'site_engineer',
+    createdByName: 'ኢ/ር ትዕግስት ሃይሉ'
+  },
+  {
+    id: 'tsk-2',
+    orderNumber: 'WO-2026-089',
+    projectId: 'prj-1',
+    assignedTo: 'የፎርምዎርክ አናጺዎች ፎርማን ታደሰ',
+    assignedRole: 'foreman',
+    titleAm: 'የ 11ኛ ፎቅ የደህንነት መከላከያ አጥር በአስቸኳይ መጠገን',
+    titleEn: 'Install perimeter fall protection scaffolding rails on East Face',
+    deadline: '2026-11-04',
+    priority: 'urgent',
+    status: 'pending',
+    createdByRole: 'site_supervisor',
+    createdByName: 'ሱፐርቫይዘር ታደሰ ወርቁ'
+  },
+  {
+    id: 'tsk-3',
+    orderNumber: 'WO-2026-090',
+    projectId: 'prj-1',
+    assignedTo: 'የኮንክሪት ማፍሰስ ንዑስ ተቋራጭ (Subcontractor)',
+    assignedRole: 'subcontractor',
+    titleAm: 'ለ 11ኛ ፎቅ ሰሌዳ ኮንክሪት ማፍሰሻ ፓምፕና ቫይብሬተሮች ዝግጅት',
+    titleEn: 'Setup stationary concrete pump lines and 3 backup poker vibrators',
+    deadline: '2026-11-05',
+    priority: 'high',
+    status: 'pending',
+    createdByRole: 'project_manager',
+    createdByName: 'ኢ/ር አለማየሁ በቀለ'
+  }
+];
+
+export const INITIAL_LEAVE_REQUESTS: LeaveRequest[] = [
+  {
+    id: 'lve-1',
+    workerId: 'w-4',
+    workerName: 'ገብረእግዚአብሔር ሃብቴ',
+    role: 'Master Mason (ግንበኛ)',
+    leaveType: 'annual',
+    startDate: '2026-11-10',
+    endDate: '2026-11-15',
+    reasonAm: 'ለቤተሰብ አመታዊ ጉዳይ የ 5 ቀን ፍቃድ',
+    status: 'pending',
+    appliedDate: '2026-11-03'
+  },
+  {
+    id: 'lve-2',
+    workerId: 'w-6',
+    workerName: 'አብዱራህማን ሰይድ',
+    role: 'Shuttering Carpenter (አናጺ)',
+    leaveType: 'sick',
+    startDate: '2026-11-01',
+    endDate: '2026-11-04',
+    reasonAm: 'የህክምና እረፍት (የሀኪም ማረጋገጫ ቀርቧል)',
+    status: 'approved',
+    appliedDate: '2026-10-31'
+  }
+];
+
+export const INITIAL_STORE_REQUISITIONS: StoreRequisition[] = [
+  {
+    id: 'req-1',
+    reqNumber: 'REQ-2026-110',
+    requestedBy: 'ኢ/ር ትዕግስት ሃይሉ (የሳይት መሃንዲስ)',
+    projectId: 'prj-1',
+    materialId: 'mat-1',
+    materialNameAm: 'ዳንጎቴ ኦፒሲ ሲሚንቶ 42.5N',
+    quantityRequested: 500,
+    unit: 'ኩንታል (Qtl)',
+    priority: 'urgent',
+    status: 'pending',
+    requestDate: '2026-11-04',
+    requiredDate: '2026-11-06'
+  },
+  {
+    id: 'req-2',
+    reqNumber: 'REQ-2026-111',
+    requestedBy: 'ሱፐርቫይዘር ታደሰ ወርቁ (ፎርማን)',
+    projectId: 'prj-1',
+    materialId: 'mat-3',
+    materialNameAm: 'ሪብድ የብረት አርማታ Ø16mm',
+    quantityRequested: 20,
+    unit: 'ቶን (Ton)',
+    priority: 'routine',
+    status: 'approved',
+    requestDate: '2026-11-02',
+    requiredDate: '2026-11-07'
+  }
+];
+
+export const INITIAL_EXECUTIVE_MEMOS: ExecutiveMemo[] = [
+  {
+    id: 'memo-1',
+    titleAm: 'የ 2019 በጀት ዓመት የኮንስትራክሽን ፕሮጀክቶች አፈፃፀምና የጥራት መመሪያ',
+    titleEn: 'FY2019 Megaproject Execution, Quality Control & Cost Optimization Directive',
+    from: 'ወ/ሮ ሮዛ ግርማ (ዋና ስራ አስፈፃሚ / CEO)',
+    category: 'policy',
+    date: '2026-11-01',
+    contentAm: 'ሁሉም የሳይት ስራ አስኪያጆችና መሃንዲሶች የኮንክሪት ጥራት ፈተና ውጤቶችን በ 48 ሰዓት ውስጥ ለዋና መ/ቤት እንዲያሳውቁ፤ እንዲሁም የነዳጅ ፍጆታን በ 12% ለመቀነስ የተዘረጋውን ዲጂታል ቁጥጥር ተግባራዊ እንዲያደርጉ በጥብቅ ታዟል።',
+    status: 'published'
+  },
+  {
+    id: 'memo-2',
+    titleAm: 'የቦሌ አትላንቲክ ህንጻ ፕሮጀክት የ 52 ሚሊዮን ብር IPC-04 ክፍያ ማረጋገጫ',
+    titleEn: 'Approval of IPC-04 Certified Interim Payment Claim for Bole Atlantic',
+    from: 'የዋና መ/ቤት ፋይናንስና ውል አስተዳደር ዳይሬክቶሬት',
+    category: 'budget_approval',
+    date: '2026-10-28',
+    contentAm: 'የአማካሪ መሃንዲሱ ያረጋገጠው የተጣራ 44.85 ሚሊዮን ብር ክፍያ በኢትዮጵያ ንግድ ባንክ በኩል ለሳይቱ ኦፕሬሽን ተፈቅዷል።',
+    status: 'published'
+  }
+];
+

@@ -4,7 +4,24 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { ActiveTab, Project, Material, Machinery, Worker, AttendanceRecord, BOQItem, InterimPaymentCertificate, SiteDailyLog, QualityTest } from './types';
+import { 
+  ActiveTab, 
+  Project, 
+  Material, 
+  Machinery, 
+  Worker, 
+  AttendanceRecord, 
+  BOQItem, 
+  InterimPaymentCertificate, 
+  SiteDailyLog, 
+  QualityTest,
+  UserRole,
+  SiteInspectionItem,
+  SiteTaskOrder,
+  LeaveRequest,
+  StoreRequisition,
+  ExecutiveMemo
+} from './types';
 import { 
   INITIAL_PROJECTS, 
   INITIAL_MATERIALS, 
@@ -14,12 +31,20 @@ import {
   INITIAL_BOQ, 
   INITIAL_IPCS, 
   INITIAL_DAILY_LOGS, 
-  INITIAL_QC_TESTS 
+  INITIAL_QC_TESTS,
+  INITIAL_INSPECTIONS,
+  INITIAL_TASK_ORDERS,
+  INITIAL_LEAVE_REQUESTS,
+  INITIAL_STORE_REQUISITIONS,
+  INITIAL_EXECUTIVE_MEMOS
 } from './data/initialData';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { Sidebar } from './components/Sidebar';
 import { TopBar } from './components/TopBar';
 import { DashboardOverview } from './components/DashboardOverview';
+import { RoleDedicatedView } from './components/RoleDedicatedView';
+import { SiteInspectionsModule } from './components/SiteInspectionsModule';
+import { TaskOrdersModule } from './components/TaskOrdersModule';
 import { ProjectsModule } from './components/ProjectsModule';
 import { MaterialsModule } from './components/MaterialsModule';
 import { MachineryModule } from './components/MachineryModule';
@@ -32,6 +57,14 @@ import { PrintDocumentModal } from './components/PrintDocumentModal';
 
 function AppContent() {
   const { language } = useLanguage();
+
+  // Role State: Project Manager, Site Engineer, or Site Supervisor
+  const [currentUserRole, setCurrentUserRole] = useState<UserRole>(() => {
+    const saved = localStorage.getItem('zemen_erp_role');
+    return (saved === 'project_manager' || saved === 'site_engineer' || saved === 'site_supervisor')
+      ? (saved as UserRole)
+      : 'project_manager';
+  });
 
   // Navigation State
   const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
@@ -87,7 +120,47 @@ function AppContent() {
     return saved ? JSON.parse(saved) : INITIAL_QC_TESTS;
   });
 
+  const [inspections, setInspections] = useState<SiteInspectionItem[]>(() => {
+    const saved = localStorage.getItem('zemen_erp_inspections');
+    return saved ? JSON.parse(saved) : INITIAL_INSPECTIONS;
+  });
+
+  const [tasks, setTasks] = useState<SiteTaskOrder[]>(() => {
+    const saved = localStorage.getItem('zemen_erp_tasks');
+    return saved ? JSON.parse(saved) : INITIAL_TASK_ORDERS;
+  });
+
+  const [leaveRequests, setLeaveRequests] = useState<LeaveRequest[]>(() => {
+    const saved = localStorage.getItem('zemen_erp_leave');
+    return saved ? JSON.parse(saved) : INITIAL_LEAVE_REQUESTS;
+  });
+
+  const [storeRequisitions, setStoreRequisitions] = useState<StoreRequisition[]>(() => {
+    const saved = localStorage.getItem('zemen_erp_store_req');
+    return saved ? JSON.parse(saved) : INITIAL_STORE_REQUISITIONS;
+  });
+
+  const [executiveMemos, setExecutiveMemos] = useState<ExecutiveMemo[]>(() => {
+    const saved = localStorage.getItem('zemen_erp_memos');
+    return saved ? JSON.parse(saved) : INITIAL_EXECUTIVE_MEMOS;
+  });
+
   // LocalStorage sync
+  useEffect(() => {
+    localStorage.setItem('zemen_erp_leave', JSON.stringify(leaveRequests));
+  }, [leaveRequests]);
+
+  useEffect(() => {
+    localStorage.setItem('zemen_erp_store_req', JSON.stringify(storeRequisitions));
+  }, [storeRequisitions]);
+
+  useEffect(() => {
+    localStorage.setItem('zemen_erp_memos', JSON.stringify(executiveMemos));
+  }, [executiveMemos]);
+  useEffect(() => {
+    localStorage.setItem('zemen_erp_role', currentUserRole);
+  }, [currentUserRole]);
+
   useEffect(() => {
     localStorage.setItem('zemen_erp_projects', JSON.stringify(projects));
   }, [projects]);
@@ -124,6 +197,14 @@ function AppContent() {
     localStorage.setItem('zemen_erp_qc', JSON.stringify(qcTests));
   }, [qcTests]);
 
+  useEffect(() => {
+    localStorage.setItem('zemen_erp_inspections', JSON.stringify(inspections));
+  }, [inspections]);
+
+  useEffect(() => {
+    localStorage.setItem('zemen_erp_tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
   const lowStockCount = materials.filter(m => m.currentStock <= m.minAlertStock).length;
 
   const handlePrintSpecificLog = (log: SiteDailyLog) => {
@@ -133,7 +214,7 @@ function AppContent() {
 
   return (
     <div className="flex h-screen bg-slate-950 text-slate-100 overflow-hidden font-sans">
-      {/* Sidebar */}
+      {/* Sidebar with Role Profile Switcher */}
       <Sidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -141,6 +222,8 @@ function AppContent() {
         setSelectedProjectId={setSelectedProjectId}
         projectsCount={projects.length}
         lowStockCount={lowStockCount}
+        currentUserRole={currentUserRole}
+        setCurrentUserRole={setCurrentUserRole}
       />
 
       {/* Main Content Area */}
@@ -155,6 +238,25 @@ function AppContent() {
 
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
           <div className="max-w-7xl mx-auto">
+            {/* Dedicated Role App Workspace Banner when active */}
+            {(currentUserRole === 'ceo' || currentUserRole === 'head_office' || currentUserRole === 'store_owner' || currentUserRole === 'hr_manager' || currentUserRole === 'employee') && (
+              <div className="mb-6">
+                <RoleDedicatedView
+                  currentUserRole={currentUserRole}
+                  projects={projects}
+                  materials={materials}
+                  workers={workers}
+                  ipcs={ipcs}
+                  leaveRequests={leaveRequests}
+                  setLeaveRequests={setLeaveRequests}
+                  storeRequisitions={storeRequisitions}
+                  setStoreRequisitions={setStoreRequisitions}
+                  executiveMemos={executiveMemos}
+                  setExecutiveMemos={setExecutiveMemos}
+                />
+              </div>
+            )}
+
             {activeTab === 'dashboard' && (
               <DashboardOverview
                 projects={projects}
@@ -164,6 +266,24 @@ function AppContent() {
                 qcTests={qcTests}
                 setActiveTab={setActiveTab}
                 setSelectedProjectId={setSelectedProjectId}
+              />
+            )}
+
+            {activeTab === 'site_inspections' && (
+              <SiteInspectionsModule
+                inspections={inspections}
+                setInspections={setInspections}
+                projects={projects}
+                currentUserRole={currentUserRole}
+              />
+            )}
+
+            {activeTab === 'task_orders' && (
+              <TaskOrdersModule
+                tasks={tasks}
+                setTasks={setTasks}
+                projects={projects}
+                currentUserRole={currentUserRole}
               />
             )}
 
